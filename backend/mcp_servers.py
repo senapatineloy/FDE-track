@@ -3,6 +3,8 @@ MCP server configurations and setup for security analysis tools.
 """
 
 import os
+import sys
+import shutil
 from typing import Dict, Any
 from agents.mcp import MCPServerStdio, create_static_tool_filter
 
@@ -17,7 +19,20 @@ def get_semgrep_server_params() -> Dict[str, Any]:
         "PYTHONUNBUFFERED": "1",  # Ensure output is not buffered
     }
 
-    return {"command": "semgrep", "args": ["mcp"], "env": env}
+    # Resolve semgrep command path (fallback to virtual environment Scripts/bin if not in PATH)
+    cmd = "semgrep"
+    if not shutil.which("semgrep"):
+        venv_dir = os.path.dirname(sys.executable)
+        candidates = [
+            os.path.join(venv_dir, "semgrep.exe"),
+            os.path.join(venv_dir, "semgrep"),
+        ]
+        for candidate in candidates:
+            if os.path.exists(candidate):
+                cmd = candidate
+                break
+
+    return {"command": cmd, "args": ["mcp"], "env": env}
 
 
 def create_semgrep_server() -> MCPServerStdio:

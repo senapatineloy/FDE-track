@@ -1,3 +1,9 @@
+variable "subscription_id" {
+  description = "Azure Subscription ID"
+  type        = string
+  default     = "e101a3ca-fcc4-42a1-a143-b3654461f0d2"
+}
+
 variable "project_name" {
   description = "Name of the project"
   type        = string
@@ -21,6 +27,19 @@ variable "openai_api_key" {
   type        = string
   sensitive   = true
   default     = ""
+}
+
+variable "gemini_api_key" {
+  description = "Google Gemini API key for the application"
+  type        = string
+  sensitive   = true
+  default     = ""
+}
+
+variable "gemini_model" {
+  description = "Google Gemini model name"
+  type        = string
+  default     = "gemini-3.5-flash"
 }
 
 variable "semgrep_app_token" {

@@ -20,6 +20,7 @@ terraform {
 # Configure Azure Provider
 provider "azurerm" {
   features {}
+  subscription_id = var.subscription_id
 }
 
 # Add a random acr_suffix to the acr name to make it globally unique.
@@ -70,9 +71,10 @@ resource "docker_image" "app" {
   
   build {
     context    = "${path.module}/../.."
-    dockerfile = "Dockerfile"
+    dockerfile = "${path.module}/../../Dockerfile"
+    builder    = "default"
     platform   = "linux/amd64"
-    no_cache   = true
+    no_cache   = false
   }
 }
 
@@ -126,6 +128,16 @@ resource "azurerm_container_app" "main" {
       env {
         name  = "OPENAI_API_KEY"
         value = var.openai_api_key
+      }
+
+      env {
+        name  = "GEMINI_API_KEY"
+        value = var.gemini_api_key
+      }
+
+      env {
+        name  = "GEMINI_MODEL"
+        value = var.gemini_model
       }
 
       env {

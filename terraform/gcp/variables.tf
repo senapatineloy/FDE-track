@@ -1,3 +1,10 @@
+variable "access_token" {
+  description = "OAuth2 access token for Google provider"
+  type        = string
+  sensitive   = true
+  default     = null
+}
+
 variable "project_id" {
   description = "GCP Project ID"
   type        = string
@@ -20,6 +27,19 @@ variable "openai_api_key" {
   type        = string
   sensitive   = true
   default     = ""
+}
+
+variable "gemini_api_key" {
+  description = "Google Gemini API key for the application"
+  type        = string
+  sensitive   = true
+  default     = ""
+}
+
+variable "gemini_model" {
+  description = "Google Gemini model name"
+  type        = string
+  default     = "gemini-3.1-flash-lite"
 }
 
 variable "semgrep_app_token" {

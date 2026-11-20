@@ -10,6 +10,10 @@ RUN npm run build
 FROM python:3.12-slim
 WORKDIR /app
 
+# Configure environment variables (ensure semgrep and venv tools are in PATH)
+ENV PYTHONUNBUFFERED=1 \
+    PATH="/root/.local/bin:/app/.venv/bin:$PATH"
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     curl \

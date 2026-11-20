@@ -17,12 +17,16 @@ Cybersecurity Analyzer - A web application for analyzing Python code for securit
 ## Architecture
 - **Frontend**: Next.js (React) with TypeScript, Tailwind CSS
   - Located in `frontend/`
+  - Structure:
+    - `src/app/`: App Router root (`favicon.ico`, `globals.css`, `layout.tsx`, `page.tsx`)
+    - `src/components/`: Modular UI (`AnalysisResults.tsx`, `CodeInput.tsx`, `FileUpload.tsx`)
+    - `src/types/`: TypeScript definitions (`security.ts`)
   - Runs on port 3000 in development
-  - Built as static export for production
+  - Built as static export for production (`output: 'export'`)
 - **Backend**: FastAPI with Python 3.12
   - Located in `backend/`
   - Runs on port 8000
-  - Uses OpenAI Agents SDK with Semgrep MCP server
+  - Uses Agents SDK with Semgrep MCP server (supports OpenAI and Google Gemini)
 
 ## Key Technical Decisions
 

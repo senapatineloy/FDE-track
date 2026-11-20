@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.12"
 
 [[package]]
@@ -42,6 +42,7 @@ dependencies = [
     { name = "fastapi" },
     { name = "httpx" },
     { name = "mcp" },
+    { name = "openai" },
     { name = "openai-agents" },
     { name = "python-dotenv" },
     { name = "semgrep" },
@@ -53,6 +54,7 @@ requires-dist = [
     { name = "fastapi", specifier = ">=0.116.1" },
     { name = "httpx", specifier = ">=0.27.0" },
     { name = "mcp", specifier = "==1.12.2" },
+    { name = "openai", specifier = ">=1.50.0" },
     { name = "openai-agents", specifier = ">=0.2.4" },
     { name = "python-dotenv", specifier = ">=1.1.1" },
     { name = "semgrep", specifier = ">=1.139.0" },

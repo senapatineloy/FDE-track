@@ -1,5 +1,7 @@
+import os
 from dotenv import load_dotenv
-from agents import Agent, Runner, function_tool
+from openai import AsyncOpenAI
+from agents import Agent, Runner, function_tool, set_tracing_disabled, OpenAIChatCompletionsModel
 import gradio as gr
 import sqlite3
 import traceback
@@ -7,7 +9,21 @@ import traceback
 
 load_dotenv(override=True)
 
-MODEL = "gpt-4.1-mini"
+# Disable OpenAI tracing for Gemini
+set_tracing_disabled(True)
+os.environ["OPENAI_AGENTS_DISABLE_TRACING"] = "1"
+
+# Configure Gemini via Google's OpenAI-compatible endpoint
+gemini_key = (os.getenv("GEMINI_API_KEY") or os.getenv("OPENAI_API_KEY") or "").strip()
+gemini_client = AsyncOpenAI(
+    base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+    api_key=gemini_key,
+)
+
+MODEL = OpenAIChatCompletionsModel(
+    model=os.getenv("GEMINI_MODEL", "gemini-3.5-flash"),
+    openai_client=gemini_client,
+)
 
 instructions = "You are a helpful assistant for an Airline called FlightAI. "
 instructions += "Use your tools to get ticket prices and calculate discounts. Trips to London have a 10% discount on the price. "
